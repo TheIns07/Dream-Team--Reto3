@@ -14,15 +14,21 @@ import org.json.JSONArray;
 public class Autor {
     public String name;
     public String affiliations;
-    public String [] interest;
+    public String email;
 
-    public Autor(String name, String affiliations, String[] interest) {
+    public Autor(String name, String affiliations, String email) {
         this.name = name;
         this.affiliations = affiliations;
-        this.interest = interest;
+        this.email = email;
     }
     
-    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getName() {
         return name;
@@ -38,14 +44,6 @@ public class Autor {
 
     public void setAffiliations(String affiliations) {
         this.affiliations = affiliations;
-    }
-
-    public String[] getInterest() {
-        return interest;
-    }
-
-    public void setInterest(String[] interest) {
-        this.interest = interest;
     }
     
 }

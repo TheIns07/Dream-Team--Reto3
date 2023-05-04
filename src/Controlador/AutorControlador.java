@@ -6,10 +6,15 @@
 package Controlador;
 
 import Modelo.Autor;
+import Modelo.Consulta;
+import java.beans.Statement;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Scanner;
@@ -24,7 +29,7 @@ import org.json.JSONArray;
  * @throws org.json.JSONException
  */
 public class AutorControlador {
-
+    private Consulta consulta;
     public void crearAutor(String query, int start, int num) throws MalformedURLException, IOException, JSONException {
 
         String BASE_URL = "https://serpapi.com/search.json?engine=google_scholar_author&author_id=" + query
@@ -51,25 +56,20 @@ public class AutorControlador {
             JSONObject jsonObject = new JSONObject(informationString.toString());
 
             JSONObject author = (JSONObject) jsonObject.get("author");
-            JSONArray interestsArray = author.getJSONArray("interests");
             String name = author.getString("name");
-
-            String[] interestsArrayConverted = new String[interestsArray.length()];
-
-            for (int i = 0; i < interestsArray.length(); i++) {
-                interestsArrayConverted[i] = interestsArray.getString(i);
-            }
+            String email= author.getString("email");
             String affiliations = author.getString("affiliations");
 
-            Autor autor = new Autor(name, affiliations, interestsArrayConverted);
+            Autor autor = new Autor(name, affiliations, email);
             System.out.println("Nombre: " + autor.getName());
-            System.out.println("Intereses: ");
-             for (int i = 0; i < interestsArray.length(); i++) {
-                 System.out.println(interestsArrayConverted[i]);
-               
-            }
             System.out.println("Afiliaciones: " + autor.getAffiliations());
+            System.out.println("Email: " + autor.getEmail());
+            
+            if(consulta.registrar(autor)){
+                System.out.println("Exitoso!");
+            }
         }
 
     }
+
 }
