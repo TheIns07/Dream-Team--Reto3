@@ -31,7 +31,6 @@ import org.json.JSONArray;
 public class AutorControlador {
     private Consulta consulta;
     public void crearAutor(String query, int start, int num) throws MalformedURLException, IOException, JSONException {
-
         String BASE_URL = "https://serpapi.com/search.json?engine=google_scholar_author&author_id=" + query
                 + "&api_key=408a30522a569d88a68d13cb09c0719a3d8b3429b625774f76fad82fa8d191af&start=" + start + "&num=" + num;
 
@@ -70,6 +69,10 @@ public class AutorControlador {
             }
         }
 
+    }
+    
+    public void listarAutor(Autor autor){
+        consulta.listar(autor);
     }
 
 }
