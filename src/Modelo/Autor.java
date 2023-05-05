@@ -12,10 +12,25 @@ import org.json.JSONArray;
  * @author Artur
  */
 public class Autor {
+    public String ID;
     public String name;
     public String affiliations;
     public String email;
 
+    public Autor(String ID, String name) {
+        this.ID = ID;
+        this.name = name;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+    
+    
     public Autor(String name, String affiliations, String email) {
         this.name = name;
         this.affiliations = affiliations;

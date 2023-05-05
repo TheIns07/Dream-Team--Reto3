@@ -36,7 +36,7 @@ public class AutorControlador {
     public Consulta consulta = new Consulta();
     public Autor autor = null;
     public ArrayList<Articulo> articulos = new ArrayList<>();
-    
+
     public StringBuilder APILogic(String query, int start, int num) throws MalformedURLException, ProtocolException, IOException {
         String BASE_URL = "https://serpapi.com/search.json?engine=google_scholar_author&author_id=" + query
                 + "&api_key=408a30522a569d88a68d13cb09c0719a3d8b3429b625774f76fad82fa8d191af&start=" + start + "&num=" + num;
@@ -65,6 +65,50 @@ public class AutorControlador {
 
     }
 
+    public ArrayList TraerAutores(String query) throws JSONException, ProtocolException, IOException {
+
+        ArrayList<Autor> autores = new ArrayList<>();
+        String apiKey = "408a30522a569d88a68d13cb09c0719a3d8b3429b625774f76fad82fa8d191af";
+
+        String urlAPI = "https://serpapi.com/search.json?engine=google_scholar_profiles&mauthors="+query+"&api_key="+apiKey;
+
+        URL url = new URL(urlAPI);
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
+
+        int responseCode = conn.getResponseCode();
+
+        if (responseCode != 200) {
+            throw new RuntimeException("HTTPResponse: " + responseCode);
+        } else {
+            StringBuilder informationString = new StringBuilder();
+            Scanner scanner = new Scanner(url.openStream());
+
+            while (scanner.hasNext()) {
+                informationString.append(scanner.nextLine());
+            }
+            scanner.close();
+            System.out.println(url);
+            JSONObject jsonObject = new JSONObject(informationString.toString());
+            JSONArray articlesArray = (JSONArray) jsonObject.get("profiles");
+
+            for (int i = 0; i < articlesArray.length(); i++) {
+                JSONObject articleObject = (JSONObject) articlesArray.get(i);
+                String name = (String)  articleObject.get("name");
+                String id = (String)  articleObject.get("author_id");
+                autores.add(new Autor(id, name));
+            }
+            
+            autores.forEach((autor) -> {
+                System.out.println(autor.getName());
+            });
+        }
+        System.out.println("Exitoso de Autores!");
+        return autores;
+    }
+
     public Autor crearAutor(String query, int start, int num) throws MalformedURLException, IOException, JSONException {
         JSONObject jsonObject = new JSONObject(APILogic(query, start, num).toString());
         JSONObject author = (JSONObject) jsonObject.get("author");
@@ -83,7 +127,7 @@ public class AutorControlador {
     public ArrayList CrearArticulos(String query, int start, int num) throws JSONException, ProtocolException, IOException {
         JSONObject jsonObject = new JSONObject(APILogic(query, start, num).toString());
         JSONArray articlesArray = (JSONArray) jsonObject.get("articles");
-        
+
         for (int i = 0; i < articlesArray.length(); i++) {
             JSONObject articleObject = (JSONObject) articlesArray.get(i);
             String title = (String) articleObject.get("title");
@@ -100,7 +144,7 @@ public class AutorControlador {
     public void RegistrarBDDAutor(Autor autor) {
         consulta.registrar(autor);
     }
-    
+
     public void RegistrarBDDArticulo(Articulo articulo) {
         consulta.registrarArticulo(articulo);
     }
@@ -108,7 +152,7 @@ public class AutorControlador {
     public ArrayList<Autor> listarAutor() {
         return consulta.listar();
     }
-    
+
     public ArrayList<Articulo> listarArticulo() {
         return consulta.listarArticulo();
     }
