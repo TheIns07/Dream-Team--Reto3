@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package apinao2;
+package Vista;
 
 import Controlador.AutorControlador;
 import Modelo.Articulo;
@@ -449,7 +449,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         JFrame jframe = new JFrame();
-        jframe.setSize(800, 250);
+        jframe.setSize(1100, 250);
         jframe.setLocationRelativeTo(null);
 
         TableModelArticulo frame = new TableModelArticulo(articulos);
@@ -458,14 +458,6 @@ public class Vista extends javax.swing.JFrame {
         JScrollPane scrollPane = new JScrollPane(tabla);
         jframe.add(scrollPane);
 
-//        JButton botonCerrar = new JButton("Cerrar");
-//        botonCerrar.size().setSize(30, 50);
-//        botonCerrar.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                jframe.dispose();
-//            }
-//        });
         setLayout(new FlowLayout(FlowLayout.RIGHT));
         //jframe.add(botonCerrar);
 
