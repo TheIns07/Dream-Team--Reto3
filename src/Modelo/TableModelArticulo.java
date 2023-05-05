@@ -12,33 +12,38 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Artur
  */
-public class TableModelAutor extends AbstractTableModel{
-    private ArrayList<Autor> autores;
+public class TableModelArticulo extends AbstractTableModel {
 
-    public TableModelAutor(ArrayList<Autor> autores) {
-        this.autores = autores;
+    private ArrayList<Articulo> articulos;
+
+    public TableModelArticulo(ArrayList<Articulo> articulos) {
+        this.articulos = articulos;
     }
 
     @Override
     public int getRowCount() {
-        return autores.size();
+        return articulos.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 3; // Nombre, Email y Afiliaciones
+        return 5; 
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Autor autor = autores.get(rowIndex);
+        Articulo articulo = articulos.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return autor.getName();
+                return articulo.getTitulo();
             case 1:
-                return autor.getEmail();
+                return articulo.getLink();
             case 2:
-                return autor.getAffiliations();
+                return articulo.getAutores();
+            case 3:
+                return articulo.getPublicacion();
+            case 4:
+                return articulo.getAño();
             default:
                 return null;
         }
@@ -48,14 +53,17 @@ public class TableModelAutor extends AbstractTableModel{
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Nombre";
+                return "Titulo";
             case 1:
-                return "Email";
+                return "Link";
             case 2:
-                return "Afiliaciones";
+                return "Autores";
+            case 3:
+                return "Publicacion";
+            case 4:
+                return "Año";
             default:
                 return null;
         }
     }
-
 }

@@ -6,16 +6,15 @@
 package apinao2;
 
 import Controlador.AutorControlador;
+import Modelo.Articulo;
 import Modelo.Autor;
-import Modelo.TableModel;
+import Modelo.TableModelArticulo;
+import Modelo.TableModelAutor;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -29,6 +28,7 @@ import org.json.JSONException;
 public class Vista extends javax.swing.JFrame {
 
     AutorControlador autor = new AutorControlador();
+    ArrayList<Articulo> articulos = autor.articulos;
 
     /**
      * Creates new form Vista
@@ -65,10 +65,12 @@ public class Vista extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         email = new javax.swing.JTextArea();
         jToggleButton3 = new javax.swing.JToggleButton();
+        jToggleButton5 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jToggleButton4 = new javax.swing.JToggleButton();
+        jToggleButton6 = new javax.swing.JToggleButton();
 
         jScrollPane3.setViewportView(jTextPane1);
 
@@ -130,33 +132,48 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton5.setBackground(new java.awt.Color(102, 102, 255));
+        jToggleButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jToggleButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton5.setText("Mostrar Articulos");
+        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jToggleButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(54, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jToggleButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel1))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel1))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
@@ -178,11 +195,13 @@ public class Vista extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jToggleButton5)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jToggleButton2.setBackground(new java.awt.Color(102, 102, 255));
@@ -197,19 +216,29 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel5.setText("ID:");
+        jLabel5.setText("ID del Autor:");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel6.setText("Numero de Referencia:");
+        jLabel6.setText("Cantidad de Articulos:");
 
         jToggleButton4.setBackground(new java.awt.Color(102, 102, 255));
         jToggleButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jToggleButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jToggleButton4.setText("Mostrar Lista de Registros");
+        jToggleButton4.setText("Mostrar Historial Autores");
         jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton4ActionPerformed(evt);
+            }
+        });
+
+        jToggleButton6.setBackground(new java.awt.Color(102, 102, 255));
+        jToggleButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jToggleButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton6.setText("Mostrar Historial Articulos");
+        jToggleButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton6ActionPerformed(evt);
             }
         });
 
@@ -217,57 +246,56 @@ public class Vista extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(id))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(numReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(id))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(numReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jToggleButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(252, 252, 252)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(217, 217, 217))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(42, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(numReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToggleButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jToggleButton4)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addGap(132, 132, 132)
+                        .addComponent(jToggleButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButton6)
+                        .addGap(28, 28, 28))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,56 +312,36 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        autorScreen.setText("");
-        afiliaciones.setText("");
-        email.setText("");
-        id.setText("");
-        numReferencia.setValue(0);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        
-        if(!id.getText().equals("")){
-            try {
-            autor.crearAutor(id.getText(), (Integer) numReferencia.getValue(), 1);
-        } catch (IOException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        autorScreen.setText(autor.autor.getName());
-        afiliaciones.setText(autor.autor.getAffiliations());
-        email.setText(autor.autor.getEmail());
-        }else {
+        if (!id.getText().equals("")) {
+            try {
+                autor.crearAutor(id.getText(), (Integer) numReferencia.getValue(), 1);
+                autor.CrearArticulos(id.getText(), (Integer) numReferencia.getValue(), (Integer) numReferencia.getValue());
+            } catch (IOException ex) {
+                 JOptionPane.showMessageDialog(null, "No se encontro al autor. Favor de meter un ID valido.");
+            } catch (JSONException ex) {
+               JOptionPane.showMessageDialog(null, "No se encontro al autor. Favor de meter un ID valido.");
+            }
+            autorScreen.setText(autor.autor.getName());
+            afiliaciones.setText(autor.autor.getAffiliations());
+            email.setText(autor.autor.getEmail());
+        } else {
             JOptionPane.showMessageDialog(null, "Campos Vacios: No se puede buscar al autor.");
         }
-        
+
 
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-        if (autorScreen.getText().equals("") || afiliaciones.getText().equals("") || email.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Campos Vacios: No se puede registrar el autor.");
-        } else {
-            autor.RegistrarBDD(autor.autor);
-            id.setText("");
-            numReferencia.setValue(0);
-            JOptionPane.showMessageDialog(null, "Autor Registrado!");
-        }
-
-
-    }//GEN-LAST:event_jToggleButton3ActionPerformed
-
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         JFrame jframe = new JFrame();
-        jframe.setSize(600, 250);
-
+        jframe.setSize(800, 250);
+        jframe.setTitle("Autores Registrados");
+        jframe.setLocationRelativeTo(null);
         ArrayList<Autor> autores = autor.listarAutor();
-        TableModel frame = new TableModel(autores);
+        TableModelAutor frame = new TableModelAutor(autores);
 
-        JTable tabla = new JTable(new TableModel(autores));
+        JTable tabla = new JTable(new TableModelAutor(autores));
         JScrollPane scrollPane = new JScrollPane(tabla);
         jframe.add(scrollPane);
 
@@ -350,6 +358,85 @@ public class Vista extends javax.swing.JFrame {
 
         jframe.setVisible(true);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
+
+    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+        JFrame jframe = new JFrame();
+        jframe.setSize(600, 250);
+        jframe.setLocationRelativeTo(null);
+
+        TableModelArticulo frame = new TableModelArticulo(articulos);
+
+        JTable tabla = new JTable(new TableModelArticulo(articulos));
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        jframe.add(scrollPane);
+
+//        JButton botonCerrar = new JButton("Cerrar");
+//        botonCerrar.size().setSize(30, 50);
+//        botonCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                jframe.dispose();
+//            }
+//        });
+        setLayout(new FlowLayout(FlowLayout.RIGHT));
+        //jframe.add(botonCerrar);
+
+        jframe.setVisible(true);
+    }//GEN-LAST:event_jToggleButton5ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        if (autorScreen.getText().equals("") || afiliaciones.getText().equals("") || email.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campos Vacios: No se puede registrar el autor.");
+        } else {
+            autor.RegistrarBDDAutor(autor.autor);
+
+            articulos.forEach((articulo) -> {
+                autor.RegistrarBDDArticulo(articulo);
+            });
+
+            id.setText("");
+            numReferencia.setValue(0);
+            JOptionPane.showMessageDialog(null, "Autor Registrado!");
+        }
+
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        autorScreen.setText("");
+        afiliaciones.setText("");
+        email.setText("");
+        id.setText("");
+        numReferencia.setValue(0);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
+        JFrame jframe = new JFrame();
+        jframe.setSize(1000, 450);
+        jframe.setTitle("Articulos Registrados");
+        jframe.setLocationRelativeTo(null);
+
+        ArrayList<Articulo> articulos = autor.listarArticulo();
+        TableModelArticulo frame = new TableModelArticulo(articulos);
+
+        JTable tabla = new JTable(new TableModelArticulo(articulos));
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        jframe.add(scrollPane);
+
+//        JButton botonCerrar = new JButton("Cerrar");
+//        botonCerrar.size().setSize(30, 50);
+//        botonCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                jframe.dispose();
+//            }
+//        });
+        setLayout(new FlowLayout(FlowLayout.RIGHT));
+        //jframe.add(botonCerrar);
+
+        jframe.setVisible(true);
+
+
+    }//GEN-LAST:event_jToggleButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,6 +495,8 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JToggleButton jToggleButton5;
+    private javax.swing.JToggleButton jToggleButton6;
     private javax.swing.JSpinner numReferencia;
     // End of variables declaration//GEN-END:variables
 }
