@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import Modelo.Autor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Consulta extends Conexion {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "INSERT INTO author (name, affiliations, email) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO author (name, affiliations, email) VALUES (?,?,?)";
 
         try {
             ps = con.prepareStatement(sql);
@@ -31,51 +32,44 @@ public class Consulta extends Conexion {
             ps.execute();
             return true;
         } catch (Exception e) {
-                System.err.print(e);
-                return false;
-            
-        } finally{
+            System.err.print(e);
+            return false;
+
+        } finally {
             try {
                 con.close();
             } catch (SQLException e) {
                 System.err.print(e);
             }
-            
+
         }
-        
+
     }
-    
-    public boolean listar(Autor autor) {
+
+    public ArrayList<Autor> listar() {
         PreparedStatement ps = null;
         Connection con = getConexion();
         ResultSet rs = null;
-        String sql = "SELECT * FROM author WHERE name =?";
+        String sql = "SELECT * FROM author";
+        ArrayList<Autor> autores = new ArrayList<>();
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, autor.getName());
             rs = ps.executeQuery();
-            ps.execute();
-            if(rs.next()){
-                autor.setAffiliations(rs.getString("name"));
-                autor.setAffiliations(rs.getString("email"));
-                autor.setAffiliations(rs.getString("affiliations"));
-                return true;
+            while (rs.next()) {
+                Autor autor = new Autor(rs.getString("name"),rs.getString("email"),rs.getString("affiliations"));
+                autores.add(autor);
             }
-            return false;
         } catch (Exception e) {
-                System.err.print(e);
-                return false;
-            
-        } finally{
+            System.err.print(e);
+        } finally {
             try {
                 con.close();
             } catch (SQLException e) {
                 System.err.print(e);
             }
-            
         }
-        
+        return autores;
     }
 
 }

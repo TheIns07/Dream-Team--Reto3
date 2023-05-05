@@ -6,6 +6,7 @@
 package apinao2;
 
 import Controlador.AutorControlador;
+import Modelo.Autor;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Scanner;
@@ -21,11 +22,9 @@ public class ApiNAO2 {
     /**
      * @param args the command line arguments
      */
-        
-
     public static void main(String[] args) throws MalformedURLException, IOException, ParseException, JSONException {
         AutorControlador autor = new AutorControlador();
-        
+
         Scanner WF = new Scanner(System.in);
         System.out.println("------------------------------------------------");
         System.out.println("Dame el ID del autor que deseas consultar: ");
@@ -36,5 +35,6 @@ public class ApiNAO2 {
         int num = WF.nextInt();
         System.out.println("------------------------------------------------");
         autor.crearAutor(query, start, num);
-        }
+
     }
+}
